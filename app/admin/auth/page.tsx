@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -9,9 +9,15 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [redirectedFrom, setRedirectedFrom] = useState('/admin/dashboard')
 
-  const searchParams = new URLSearchParams(window.location.search)
-  const redirectedFrom = searchParams.get('redirectedFrom') || '/admin/dashboard'
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search)
+      const redirected = searchParams.get('redirectedFrom')
+      if (redirected) setRedirectedFrom(redirected)
+    }
+  }, [])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
