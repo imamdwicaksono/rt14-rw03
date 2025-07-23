@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
 
 const slides = [
   {
@@ -30,11 +31,22 @@ export default function HomePage() {
   const pathname = usePathname()
 
   useEffect(() => {
+
+    handlerIsLogin()
+
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length)
     }, 4000)
     return () => clearInterval(interval)
   }, [])
+
+  const handlerIsLogin = async () => {
+    // Check if the current path starts with '/admin'
+    if (await supabase.auth.getSession()) {
+      return true
+    }
+    return pathname.startsWith('/admin')
+  }
 
   return (
     <div className="space-y-6">
