@@ -2,13 +2,24 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase'
 
 export default function HeaderBar() {
     const [open, setOpen] = useState(false);
+    const router = useRouter();
+
+    const pathname = usePathname();
+
+    const handlerLogout = async () => {
+        await supabase.auth.signOut()
+        router.push('/admin/auth') // redirect ke halaman login admin
+        setOpen(false); // tutup menu jika sedang terbuka
+    }
 
     return (
         <nav className="bg-white shadow-md">
-            <div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div className="w-[90%] mx-auto px-4 py-3 flex justify-between items-center">
                 <div className="flex justify-center items-center gap-3">
                     <Image src="/icon/beringin14_icon.png" alt="Icon" width={48} height={48} className="rounded-full" />
                     <div>
@@ -17,14 +28,31 @@ export default function HeaderBar() {
                     </div>
                 </div>
                 {/* Desktop menu */}
-                <div className="hidden md:flex space-x-4 text-sm">
-                    <Link href="/">Beranda</Link>
-                    <Link href="/berita">Berita</Link>
-                    <Link href="/galeri">Galeri</Link>
-                    <Link href="/struktur">Struktur</Link>
-                    <Link href="/pengaduan">Pengaduan</Link>
-                    <Link href="/polling">Polling</Link>
-                </div>
+                {pathname.startsWith('/admin') ? (
+                    <div className="hidden md:flex space-x-4 text-sm">
+                        <Link href="/admin">Admin Panel</Link>
+                        <Link href="/admin/berita">Berita & Kegiatan</Link>
+                        <Link href="/admin/galeri">Galeri Foto</Link>
+                        <Link href="/admin/struktur">Struktur Organisasi</Link>
+                        <Link href="/admin/pengaduan">Pengaduan Warga</Link>
+                        <Link href="/admin/polling">Polling Musyawarah</Link>
+                        <button
+                                onClick={handlerLogout}
+                                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+                            >
+                                Logout
+                            </button>
+                    </div>
+                ) : (
+                    <div className="hidden md:flex space-x-4 text-sm">
+                        <Link href="/">Beranda</Link>
+                        <Link href="/berita">Berita</Link>
+                        <Link href="/galeri">Galeri</Link>
+                        <Link href="/struktur">Struktur</Link>
+                        <Link href="/pengaduan">Pengaduan</Link>
+                        <Link href="/polling">Polling</Link>
+                    </div>
+                )}
                 {/* Burger button */}
                 <button
                     className="md:hidden flex flex-col justify-center items-center w-8 h-8"
@@ -38,16 +66,35 @@ export default function HeaderBar() {
             </div>
             {/* Mobile menu */}
             {open && (
-                <div className="md:hidden px-4 pb-4">
-                    <div className="flex flex-col space-y-2 text-sm">
-                        <Link href="/" onClick={() => setOpen(false)}>Beranda</Link>
-                        <Link href="/berita" onClick={() => setOpen(false)}>Berita</Link>
-                        <Link href="/galeri" onClick={() => setOpen(false)}>Galeri</Link>
-                        <Link href="/struktur" onClick={() => setOpen(false)}>Struktur</Link>
-                        <Link href="/pengaduan" onClick={() => setOpen(false)}>Pengaduan</Link>
-                        <Link href="/polling" onClick={() => setOpen(false)}>Polling</Link>
+                pathname.startsWith('/admin') ? (
+                    <div className="md:hidden px-4 pb-4">
+                        <div className="flex flex-col space-y-2 text-sm">
+                            <Link href="/admin" onClick={() => setOpen(false)}>Admin Panel</Link>
+                            <Link href="/admin/berita" onClick={() => setOpen(false)}>Berita & Kegiatan</Link>
+                            <Link href="/admin/galeri" onClick={() => setOpen(false)}>Galeri Foto</Link>
+                            <Link href="/admin/struktur" onClick={() => setOpen(false)}>Struktur Organisasi</Link>
+                            <Link href="/admin/pengaduan" onClick={() => setOpen(false)}>Pengaduan Warga</Link>
+                            <Link href="/admin/polling" onClick={() => setOpen(false)}>Polling Musyawarah</Link>
+                            <button
+                                onClick={handlerLogout}
+                                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+                            >
+                                Logout
+                            </button>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="md:hidden px-4 pb-4">
+                        <div className="flex flex-col space-y-2 text-sm">
+                            <Link href="/" onClick={() => setOpen(false)}>Beranda</Link>
+                            <Link href="/berita" onClick={() => setOpen(false)}>Berita</Link>
+                            <Link href="/galeri" onClick={() => setOpen(false)}>Galeri</Link>
+                            <Link href="/struktur" onClick={() => setOpen(false)}>Struktur</Link>
+                            <Link href="/pengaduan" onClick={() => setOpen(false)}>Pengaduan</Link>
+                            <Link href="/polling" onClick={() => setOpen(false)}>Polling</Link>
+                        </div>
+                    </div>
+                )
             )}
         </nav>
     );

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -10,16 +10,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
+  const searchParams = new URLSearchParams(window.location.search)
+  const redirectedFrom = searchParams.get('redirectedFrom') || '/admin/dashboard'
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+
     if (error) {
       setError(error.message)
     } else {
-      router.push('/admin/dashboard')
+      router.push(redirectedFrom)
     }
   }
 

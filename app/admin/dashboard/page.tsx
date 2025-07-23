@@ -1,86 +1,52 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
-export default function DashboardPage() {
-  const router = useRouter()
-  const [judul, setJudul] = useState('')
-  const [isi, setIsi] = useState('')
-  const [gambar, setGambar] = useState<File | null>(null)
-  const [loading, setLoading] = useState(false)
+interface User {
+  id: string
+  email: string
+}
+
+export default function AdminDashboard() {
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) router.push('/admin/login')
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) {
+        setUser({
+          id: data.user.id,
+          email: data.user.email ?? ''
+        })
+      } else {
+        setUser(null)
+      }
     })
   }, [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-
-    let gambar_url = ''
-    if (gambar) {
-      const fileExt = gambar.name.split('.').pop()
-      const fileName = `${Date.now()}.${fileExt}`
-      const { data, error } = await supabase.storage
-        .from('berita')
-        .upload(fileName, gambar)
-
-      if (error) return alert('Upload gambar gagal')
-
-      const { data: urlData } = supabase.storage.from('berita').getPublicUrl(fileName)
-      gambar_url = urlData.publicUrl
-    }
-
-    const { error } = await supabase.from('berita').insert({ judul, isi, gambar_url })
-
-    if (error) alert('Gagal simpan berita')
-    else {
-      setJudul('')
-      setIsi('')
-      setGambar(null)
-      alert('Berhasil upload berita')
-    }
-
-    setLoading(false)
-  }
-
   return (
-    <div className="max-w-xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">📤 Upload Berita</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Judul"
-          className="w-full p-2 border rounded"
-          value={judul}
-          onChange={(e) => setJudul(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Isi berita"
-          className="w-full p-2 border rounded"
-          value={isi}
-          onChange={(e) => setIsi(e.target.value)}
-          rows={5}
-          required
-        />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setGambar(e.target.files?.[0] || null)}
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"
-        >
-          {loading ? 'Mengirim...' : 'Upload'}
-        </button>
-      </form>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-2">🛠️ Dashboard Admin</h1>
+      <p className="text-sm text-gray-600 mb-6">Selamat datang kembali {user?.email}</p>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="rounded-xl bg-white shadow p-4">
+          <h2 className="text-lg font-semibold">📝 Tambah Berita</h2>
+          <p className="text-sm text-gray-500">Kelola berita dan informasi kegiatan RT.</p>
+        </div>
+        <div className="rounded-xl bg-white shadow p-4">
+          <h2 className="text-lg font-semibold">🖼️ Galeri</h2>
+          <p className="text-sm text-gray-500">Upload dan edit foto kegiatan warga.</p>
+        </div>
+        <div className="rounded-xl bg-white shadow p-4">
+          <h2 className="text-lg font-semibold">👥 Struktur</h2>
+          <p className="text-sm text-gray-500">Perbaharui struktur organisasi RT.</p>
+        </div>
+        <div className="rounded-xl bg-white shadow p-4">
+          <h2 className="text-lg font-semibold">📮 Pengaduan</h2>
+          <p className="text-sm text-gray-500">Cek laporan/pengaduan dari warga.</p>
+        </div>
+      </div>
     </div>
   )
 }
