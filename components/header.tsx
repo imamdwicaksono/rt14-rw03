@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation';
@@ -7,6 +7,8 @@ import { supabase } from '@/lib/supabase'
 
 export default function HeaderBar() {
     const [open, setOpen] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState<import('@supabase/supabase-js').User | null>(null);
     const router = useRouter();
 
     const pathname = usePathname();
@@ -16,6 +18,20 @@ export default function HeaderBar() {
         router.push('/admin/auth') // redirect ke halaman login admin
         setOpen(false); // tutup menu jika sedang terbuka
     }
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                setIsLogin(true);
+                setUser(session.user);
+            } else {
+                setIsLogin(false);
+                setUser(null);
+            }
+        }
+        checkSession();
+    }, []);
 
     return (
         <nav className="bg-white shadow-md">
@@ -36,12 +52,14 @@ export default function HeaderBar() {
                         <Link href="/admin/struktur">Struktur Organisasi</Link>
                         <Link href="/admin/pengaduan">Pengaduan Warga</Link>
                         <Link href="/admin/polling">Polling Musyawarah</Link>
-                        <button
+                        {isLogin && (
+                            <button
                                 onClick={handlerLogout}
                                 className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
                             >
                                 Logout
                             </button>
+                        )}
                     </div>
                 ) : (
                     <div className="hidden md:flex space-x-4 text-sm">
@@ -75,12 +93,15 @@ export default function HeaderBar() {
                             <Link href="/admin/struktur" onClick={() => setOpen(false)}>Struktur Organisasi</Link>
                             <Link href="/admin/pengaduan" onClick={() => setOpen(false)}>Pengaduan Warga</Link>
                             <Link href="/admin/polling" onClick={() => setOpen(false)}>Polling Musyawarah</Link>
-                            <button
-                                onClick={handlerLogout}
-                                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
-                            >
-                                Logout
-                            </button>
+                            
+                            {isLogin && (
+                                <button
+                                    onClick={handlerLogout}
+                                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+                                >
+                                    Logout
+                                </button>
+                            )}
                         </div>
                     </div>
                 ) : (
