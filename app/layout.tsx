@@ -27,6 +27,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="id">
       <head>
         <link rel="icon" href="/favicon.png" sizes="32x32" type="image/png" />
+        <meta name="description" content="Website resmi RT 14 RW 03 Keroncong Permai" />
+        <meta property="og:title" content="Beringin 14 - RT 14 RW 03" />
+        <meta property="og:description" content="Informasi kegiatan, galeri dan pengaduan warga." />
+        <meta property="og:image" content="https://beringin14.vercel.app/og-cover.png" />
+        <meta property="og:url" content="https://beringin14.vercel.app" />
+        <meta name="twitter:card" content="summary_large_image" />
       </head>
       <body className="bg-[#D3D3D3] text-gray-900">
         <HeaderBar />
