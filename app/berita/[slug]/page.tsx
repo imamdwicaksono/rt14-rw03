@@ -52,7 +52,7 @@ export default function BeritaDetailPage() {
           <img
             src={berita.gambar_url}
             alt={berita.judul}
-            className="rounded-md mb-4 w-full max-h-[400px] object-cover"
+            className="object-cover w-full mb-4 rounded-md"
           />
         )}
         <p className="text-base leading-relaxed whitespace-pre-line">
