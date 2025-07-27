@@ -62,26 +62,25 @@ export default function HomePage() {
           <p className="text-sm text-gray-600">Informasi terbaru seputar kegiatan warga.</p>
         </Link>
 
-        <Link href="/coming-soon" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
+        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
           <h3 className="text-lg font-bold">🖼️ Galeri Foto</h3>
           <p className="text-sm text-gray-600">(Coming Soon) Dokumentasi foto kegiatan RT.</p>
-        </Link>
+        </div>
 
-        <Link href="/coming-soon" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
+        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
           <h3 className="text-lg font-bold">👥 Struktur Organisasi</h3>
           <p className="text-sm text-gray-600">(Coming Soon) Pengurus RT hingga Kelurahan.</p>
-        </Link>
+        </div>
 
-        <Link href="/coming-soon" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
+        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
           <h3 className="text-lg font-bold">📮 Pengaduan Warga</h3>
           <p className="text-sm text-gray-600">(Coming Soon) Sampaikan keluhan atau laporan Anda.</p>
-        </Link>
+        </div>
 
-        <Link href="/coming-soon" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
+        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
           <h3 className="text-lg font-bold">📊 Polling Musyawarah</h3>
           <p className="text-sm text-gray-600">(Coming Soon) Ikut serta dalam pengambilan keputusan.</p>
-        </Link>
-
+        </div>
       </div>
     </div>
   )
