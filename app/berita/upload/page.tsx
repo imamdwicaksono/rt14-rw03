@@ -50,21 +50,21 @@ export default function UploadBeritaPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">📝 Upload Berita Baru</h1>
-      {error && <p className="text-red-600 mb-2">{error}</p>}
+    <div className="max-w-2xl mx-auto">
+      <h1 className="mb-4 text-2xl font-bold">📝 Upload Berita Baru</h1>
+      {error && <p className="mb-2 text-red-600">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           placeholder="Judul berita"
-          className="w-full border p-2 rounded"
+          className="w-full p-2 border rounded"
           value={judul}
           onChange={(e) => setJudul(e.target.value)}
           required
         />
         <textarea
           placeholder="Konten berita"
-          className="w-full border p-2 rounded"
+          className="w-full p-2 border rounded"
           rows={6}
           value={konten}
           onChange={(e) => setKonten(e.target.value)}
@@ -78,7 +78,7 @@ export default function UploadBeritaPage() {
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
           disabled={loading}
         >
           {loading ? 'Mengunggah...' : 'Upload Berita'}

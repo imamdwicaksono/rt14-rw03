@@ -31,9 +31,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">🔐 Login Admin</h1>
-      {error && <p className="text-red-600 text-sm mb-2">{error}</p>}
+    <div className="max-w-md mx-auto">
+      <h1 className="mb-4 text-2xl font-bold">🔐 Login Admin</h1>
+      {error && <p className="mb-2 text-sm text-red-600">{error}</p>}
       <form onSubmit={handleLogin} className="space-y-4">
         <input
           type="email"
@@ -53,7 +53,7 @@ export default function LoginPage() {
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          className="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700"
         >
           Login
         </button>

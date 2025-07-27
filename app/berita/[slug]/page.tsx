@@ -34,17 +34,17 @@ export default function BeritaDetailPage() {
     if (slug) fetchBerita()
   }, [slug])
 
-  if (!berita) return <div className="p-6 text-center">Loading...</div>
+  if (!berita) return <div className="text-center">Loading...</div>
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="max-w-3xl mx-auto">
       <HeaderContent
               h1="📢 Detail Berita & Kegiatan Warga"
               p="Detail Berita-berita dan kegiatan terbaru warga Beringin 14."
             />  
-      <div className="bg-white p-4 rounded-xl shadow">
-        <h1 className="text-2xl font-bold mb-2">{berita.judul}</h1>
-        <p className="text-sm text-gray-500 mb-3">
+      <div className="p-4 bg-white shadow rounded-xl">
+        <h1 className="mb-2 text-2xl font-bold">{berita.judul}</h1>
+        <p className="mb-3 text-sm text-gray-500">
           {new Date(berita.created_at).toLocaleDateString('id-ID')}
         </p>
         {berita.gambar_url && (

@@ -34,10 +34,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property="og:url" content="https://beringin14.vercel.app" />
         <meta name="twitter:card" content="summary_large_image" />
       </head>
-      <body className="bg-[#D3D3D3] text-gray-900">
+      <body className="bg-[#D3D3D3] text-gray-900 ">
         <HeaderBar />
-        <main className="min-h-screen w-[90%] mx-auto py-6 px-4">{children}</main>
-        <footer className="bg-white text-center py-4 text-xs text-gray-500">
+        <main className="min-h-screen w-[90%] mx-auto pt-[30px] pb-[30px]">{children}</main>
+        <footer className="py-4 text-xs text-center text-gray-500 bg-white">
           © {new Date().getFullYear()} RT 14 RW 03 Keroncong Permai
         </footer>
       </body>

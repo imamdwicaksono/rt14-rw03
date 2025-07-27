@@ -49,8 +49,8 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">📤 Upload Berita</h1>
+    <div className="max-w-xl mx-auto">
+      <h1 className="mb-4 text-2xl font-bold">📤 Upload Berita</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
@@ -76,7 +76,7 @@ export default function DashboardPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"
+          className="w-full p-2 text-white bg-green-600 rounded hover:bg-green-700"
         >
           {loading ? 'Mengirim...' : 'Upload'}
         </button>
