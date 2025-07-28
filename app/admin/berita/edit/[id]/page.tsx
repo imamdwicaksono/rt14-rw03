@@ -1,155 +1,153 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { v4 as uuidv4 } from 'uuid'
 import TiptapEditor from '@/components/TiptapEditor'
 
-interface propParams {
-  id: string
-}
 
-export default function EditBeritaPage({ params }: { params: propParams }) {
-  const id = params.id
-  const router = useRouter()
+export default function EditBeritaPage() {
+    const params = useParams()
+    const id = params?.id as string // <- pastikan string
+    const router = useRouter()
 
-  const [judul, setJudul] = useState('')
-  const [slug, setSlug] = useState('')
-  const [isi, setIsi] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [selectedImage, setSelectedImage] = useState<string | File | null>(null)
+    const [judul, setJudul] = useState('')
+    const [slug, setSlug] = useState('')
+    const [isi, setIsi] = useState('')
+    const [loading, setLoading] = useState(true)
+    const [selectedImage, setSelectedImage] = useState<string | File | null>(null)
 
-  useEffect(() => {
-    if (!id) return
-    const fetchData = async () => {
-      const { data } = await supabase.from('berita').select().eq('id', id).single()
-      if (data) {
-        setJudul(data.judul)
-        setSlug(data.slug)
-        setIsi(data.isi)
-        setSelectedImage(data.gambar_url ?? null)
-      }
-      setLoading(false)
-    }
-    fetchData()
-  }, [id])
-
-  // optional cleanup for preview URL
-  useEffect(() => {
-    let objectUrl: string
-    if (selectedImage instanceof File) {
-      objectUrl = URL.createObjectURL(selectedImage)
-      return () => URL.revokeObjectURL(objectUrl)
-    }
-  }, [selectedImage])
-
-  const uploadImage = async (file: File): Promise<string | null> => {
-    const filename = `${uuidv4()}-${file.name.replace(/\s/g, '_')}`
-    const { error } = await supabase.storage.from('berita').upload(filename, file)
-    if (error) {
-      console.error('Upload error:', error)
-      return null
-    }
-    const { data } = supabase.storage.from('berita').getPublicUrl(filename)
-    return data.publicUrl
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-
-    let gambar_url: string | null = null
-
-    if (selectedImage) {
-      if (typeof selectedImage === 'string') {
-        gambar_url = selectedImage
-      } else {
-        const uploaded = await uploadImage(selectedImage)
-        if (!uploaded) {
-          alert('Gagal upload gambar')
-          setLoading(false)
-          return
+    useEffect(() => {
+        if (!id) return
+        const fetchData = async () => {
+        const { data } = await supabase.from('berita').select().eq('id', id).single()
+        if (data) {
+            setJudul(data.judul)
+            setSlug(data.slug)
+            setIsi(data.isi)
+            setSelectedImage(data.gambar_url ?? null)
         }
-        gambar_url = uploaded
-      }
+        setLoading(false)
+        }
+        fetchData()
+    }, [id])
+
+    // optional cleanup for preview URL
+    useEffect(() => {
+        let objectUrl: string
+        if (selectedImage instanceof File) {
+        objectUrl = URL.createObjectURL(selectedImage)
+        return () => URL.revokeObjectURL(objectUrl)
+        }
+    }, [selectedImage])
+
+    const uploadImage = async (file: File): Promise<string | null> => {
+        const filename = `${uuidv4()}-${file.name.replace(/\s/g, '_')}`
+        const { error } = await supabase.storage.from('berita').upload(filename, file)
+        if (error) {
+        console.error('Upload error:', error)
+        return null
+        }
+        const { data } = supabase.storage.from('berita').getPublicUrl(filename)
+        return data.publicUrl
     }
 
-    const { error } = await supabase
-      .from('berita')
-      .update({ judul, slug, isi, gambar_url })
-      .eq('id', id)
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
 
-    if (!error) {
-      alert('Berhasil update berita')
-      router.push('/admin/berita')
-    } else {
-      alert('Gagal update berita')
+        let gambar_url: string | null = null
+
+        if (selectedImage) {
+        if (typeof selectedImage === 'string') {
+            gambar_url = selectedImage
+        } else {
+            const uploaded = await uploadImage(selectedImage)
+            if (!uploaded) {
+            alert('Gagal upload gambar')
+            setLoading(false)
+            return
+            }
+            gambar_url = uploaded
+        }
+        }
+
+        const { error } = await supabase
+        .from('berita')
+        .update({ judul, slug, isi, gambar_url })
+        .eq('id', id)
+
+        if (!error) {
+        alert('Berhasil update berita')
+        router.push('/admin/berita')
+        } else {
+        alert('Gagal update berita')
+        }
+        setLoading(false)
     }
-    setLoading(false)
-  }
 
-  if (loading) return <p className="p-4">Loading...</p>
+    if (loading) return <p className="p-4">Loading...</p>
 
-  return (
-    <div className="max-w-4xl p-4 mx-auto space-y-4">
-      <h1 className="text-xl font-bold">✏️ Edit Berita</h1>
+    return (
+        <div className="max-w-4xl p-4 mx-auto space-y-4">
+        <h1 className="text-xl font-bold">✏️ Edit Berita</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block font-semibold">Judul</label>
-          <input
-            type="text"
-            className="w-full p-2 border rounded"
-            value={judul}
-            onChange={(e) => {
-              setJudul(e.target.value)
-              setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'))
-            }}
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block font-semibold">Konten</label>
-          <TiptapEditor content={isi} onChange={setIsi} />
-        </div>
-
-        <div>
-          <label className="block font-semibold">Gambar</label>
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/jpg"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                setSelectedImage(e.target.files[0])
-              }
-            }}
-          />
-          {selectedImage && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={
-                typeof selectedImage === 'string'
-                  ? selectedImage
-                  : selectedImage instanceof File
-                    ? URL.createObjectURL(selectedImage)
-                    : ''
-              }
-              alt="Preview"
-              className="mt-2 rounded max-h-48"
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+            <label className="block font-semibold">Judul</label>
+            <input
+                type="text"
+                className="w-full p-2 border rounded"
+                value={judul}
+                onChange={(e) => {
+                setJudul(e.target.value)
+                setSlug(e.target.value.toLowerCase().replace(/\s+/g, '-'))
+                }}
+                required
             />
-          )}
-        </div>
+            </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700 disabled:opacity-50"
-        >
-          {loading ? 'Menyimpan...' : 'Simpan Perubahan'}
-        </button>
-      </form>
-    </div>
-  )
+            <div>
+            <label className="block font-semibold">Konten</label>
+            <TiptapEditor content={isi} onChange={setIsi} />
+            </div>
+
+            <div>
+            <label className="block font-semibold">Gambar</label>
+            <input
+                type="file"
+                accept="image/jpeg,image/png,image/jpg"
+                onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                    setSelectedImage(e.target.files[0])
+                }
+                }}
+            />
+            {selectedImage && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                src={
+                    typeof selectedImage === 'string'
+                    ? selectedImage
+                    : selectedImage instanceof File
+                        ? URL.createObjectURL(selectedImage)
+                        : ''
+                }
+                alt="Preview"
+                className="mt-2 rounded max-h-48"
+                />
+            )}
+            </div>
+
+            <button
+            type="submit"
+            disabled={loading}
+            className="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700 disabled:opacity-50"
+            >
+            {loading ? 'Menyimpan...' : 'Simpan Perubahan'}
+            </button>
+        </form>
+        </div>
+    )
 }
