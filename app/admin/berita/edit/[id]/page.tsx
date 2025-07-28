@@ -8,7 +8,13 @@ import { v4 as uuidv4 } from 'uuid'
 // Lazy-load editor
 import TiptapEditor from '@/components/TiptapEditor'
 
-export default function EditBeritaPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+
+export default function EditBeritaPage({ params }: PageProps) {
   const { id } = params
   const router = useRouter()
 
