@@ -6,7 +6,11 @@ import { supabase } from '@/lib/supabase'
 import { v4 as uuidv4 } from 'uuid'
 import TiptapEditor from '@/components/TiptapEditor'
 
-export default function EditBeritaPage({ params }: { params: { id: string } }) {
+interface propParams {
+  id: string
+}
+
+export default function EditBeritaPage({ params }: { params: propParams }) {
   const id = params.id
   const router = useRouter()
 
