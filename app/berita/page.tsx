@@ -52,7 +52,8 @@ export default function BeritaPage() {
                 className="object-cover mb-3 rounded-md max-h-64"
               />
             )}
-            <p className="line-clamp-3">{item.isi}</p>
+            <p className="line-clamp-3" dangerouslySetInnerHTML={{ __html: item.isi }} />
+
             <div className="mt-3 text-right">
               <a
                 href={`/berita/${item.slug}`}

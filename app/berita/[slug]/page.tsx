@@ -55,9 +55,7 @@ export default function BeritaDetailPage() {
             className="object-cover w-full mb-4 rounded-md"
           />
         )}
-        <p className="text-base leading-relaxed whitespace-pre-line">
-          {berita.isi}
-        </p>
+        <p className="text-base leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: berita.isi }} />
       </div>
     </div>
   )
