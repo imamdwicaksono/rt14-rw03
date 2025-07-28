@@ -22,6 +22,7 @@ export default function BeritaPage() {
         .from('berita')
         .select('*')
         .order('created_at', { ascending: false })
+        .eq('status', true)
 
       if (!error && data) {
         setBeritaList(data)

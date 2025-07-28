@@ -24,6 +24,7 @@ export default function BeritaDetailPage() {
         .from('berita')
         .select('*')
         .eq('slug', slug)
+        .eq('status', true)
         .single()
 
       if (!error && data) {
