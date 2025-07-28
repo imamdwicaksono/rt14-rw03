@@ -27,7 +27,7 @@ const slides = [
 ]
 
 export default function HomePage() {
-  const [index, setIndex] = useState(0)
+  const [,setIndex] = useState(0)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -38,6 +38,7 @@ export default function HomePage() {
       setIndex((prev) => (prev + 1) % slides.length)
     }, 4000)
     return () => clearInterval(interval)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handlerIsLogin = async () => {

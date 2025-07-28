@@ -27,7 +27,7 @@ const slides = [
 ]
 
 export default function HomePage() {
-  const [index, setIndex] = useState(0)
+  const [, setIndex] = useState(0)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -38,6 +38,7 @@ export default function HomePage() {
       setIndex((prev) => (prev + 1) % slides.length)
     }, 4000)
     return () => clearInterval(interval)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handlerIsLogin = async () => {
@@ -52,12 +53,12 @@ export default function HomePage() {
     <div className="space-y-6">
       {/* Header */}
       {pathname.startsWith('/admin') ? (
-        <div className="bg-gray-800 text-white p-4 rounded-xl shadow text-center">
+        <div className="p-4 text-center text-white bg-gray-800 shadow rounded-xl">
           <h1 className="text-xl font-bold">🛠️ Admin Panel</h1>
         </div>
       ) : (
-        <div className="bg-white p-4 rounded-xl shadow text-center">
-          <div className="flex justify-center items-center gap-3">
+        <div className="p-4 text-center bg-white shadow rounded-xl">
+          <div className="flex items-center justify-center gap-3">
             <Image src="/icon.png" alt="Icon" width={48} height={48} className="rounded-full" />
             <div>
               <h1 className="text-2xl font-bold">Beringin 14</h1>
@@ -68,7 +69,7 @@ export default function HomePage() {
       )}
 
       {/* Carousel */}
-      {/* <div className="rounded-xl overflow-hidden shadow-md">
+      {/* <div className="overflow-hidden shadow-md rounded-xl">
         <Image
           src={slides[index].src}
           alt={slides[index].alt}
@@ -83,27 +84,27 @@ export default function HomePage() {
 
       {/* Links */}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Link href="/admin/berita" className="rounded-xl bg-white shadow p-4 hover:bg-gray-100">
+        <Link href="/admin/berita" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">📢 Setting Berita & Kegiatan</h3>
           <p className="text-sm text-gray-600">Informasi terbaru seputar kegiatan warga.</p>
         </Link>
 
-        <Link href="/admin/galeri" className="rounded-xl bg-white shadow p-4 hover:bg-gray-100">
+        <Link href="/admin/galeri" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">🖼️ Setting Galeri Foto</h3>
           <p className="text-sm text-gray-600">Dokumentasi foto kegiatan RT.</p>
         </Link>
 
-        <Link href="/admin/struktur" className="rounded-xl bg-white shadow p-4 hover:bg-gray-100">
+        <Link href="/admin/struktur" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">👥 Setting Struktur Organisasi</h3>
           <p className="text-sm text-gray-600">Pengurus RT hingga Kelurahan.</p>
         </Link>
 
-        <Link href="/admin/pengaduan" className="rounded-xl bg-white shadow p-4 hover:bg-gray-100">
+        <Link href="/admin/pengaduan" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">📮 Setting Pengaduan Warga</h3>
           <p className="text-sm text-gray-600">Sampaikan keluhan atau laporan Anda.</p>
         </Link>
 
-        <Link href="/admin/polling" className="rounded-xl bg-white shadow p-4 hover:bg-gray-100">
+        <Link href="/admin/polling" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">📊 Setting Polling Musyawarah</h3>
           <p className="text-sm text-gray-600">Ikut serta dalam pengambilan keputusan.</p>
         </Link>

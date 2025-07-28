@@ -14,11 +14,11 @@ export default function AddBeritaPage() {
     const [slug, setSlug] = useState('')
     const [isi, setIsi] = useState('')
     const [selectedImage, setSelectedImage] = useState<File | null>(null)
-    const [loading, setLoading] = useState(false)
+    const [, setLoading] = useState(false)
 
     const uploadImage = async (file: File): Promise<string | null> => {
         const filename = `${uuidv4()}-${file.name.replace(/\s/g, '_')}`
-        const { data, error } = await supabase.storage
+        const { error } = await supabase.storage
         .from('berita')
         .upload(filename, file)
 
