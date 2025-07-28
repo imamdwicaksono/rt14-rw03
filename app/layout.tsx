@@ -17,23 +17,27 @@ const geistMono = Geist_Mono({
 
 
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'RT 14 RW 03 Keroncong Permai',
   description: 'Website resmi warga RT 14 RW 03 Kelurahan Keroncong, Jatiuwung, Kota Tangerang.',
-}
+  icons: {
+    icon: '/favicon.png',
+  },
+  openGraph: {
+    title: 'Beringin 14 - RT 14 RW 03',
+    description: 'Informasi kegiatan, galeri dan pengaduan warga.',
+    images: ['https://beringin14.vercel.app/og-cover.png'],
+    url: 'https://beringin14.vercel.app',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+};
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
-      <head>
-        <link rel="icon" href="/favicon.png" sizes="32x32" type="image/png" />
-        <meta name="description" content="Website resmi RT 14 RW 03 Keroncong Permai" />
-        <meta property="og:title" content="Beringin 14 - RT 14 RW 03" />
-        <meta property="og:description" content="Informasi kegiatan, galeri dan pengaduan warga." />
-        <meta property="og:image" content="https://beringin14.vercel.app/og-cover.png" />
-        <meta property="og:url" content="https://beringin14.vercel.app" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </head>
       <body className="bg-[#D3D3D3] text-gray-900 ">
         <HeaderBar />
         <main className="min-h-screen w-[90%] mx-auto pt-[30px] pb-[30px]">{children}</main>
