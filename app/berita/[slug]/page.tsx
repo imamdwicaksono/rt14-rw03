@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import HeaderContent from '@/components/header_content'
+import ShareButtons from '@/components/ShareButtons'
 
 type Berita = {
   id: number
@@ -48,6 +49,7 @@ export default function BeritaDetailPage() {
         <p className="mb-3 text-sm text-gray-500">
           {new Date(berita.created_at).toLocaleDateString('id-ID')}
         </p>
+        <ShareButtons title={berita.judul}  />
         {berita.gambar_url && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
