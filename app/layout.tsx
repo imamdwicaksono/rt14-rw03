@@ -21,7 +21,10 @@ export const metadata: Metadata = {
   title: 'RT 14 RW 03 Keroncong Permai',
   description: 'Website resmi warga RT 14 RW 03 Kelurahan Keroncong, Jatiuwung, Kota Tangerang.',
   icons: {
-    icon: '/favicon.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
   },
   openGraph: {
     title: 'Beringin 14 - RT 14 RW 03',
