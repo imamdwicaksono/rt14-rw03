@@ -1,5 +1,4 @@
 
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 export default function HeaderContent({h1, p}: {h1: string, p: string}) {
@@ -7,18 +6,18 @@ export default function HeaderContent({h1, p}: {h1: string, p: string}) {
 
     return (
         
-        <div className="bg-white p-4 rounded-xl shadow text-center mb-4">
+        <div className="p-4 mb-4 text-center bg-white shadow rounded-xl">
             {pathname.startsWith('/admin') ? (
-                <div className="bg-gray-800 text-white p-4 rounded-xl shadow text-center">
+                <div className="p-4 text-center text-white bg-gray-800 shadow rounded-xl">
                 <h1 className="text-xl font-bold">🛠️ Admin Panel</h1>
                 </div>
             ) : (
-                <div className="flex justify-center items-center gap-3">
-                    {/* <Image src="/icon.png" alt="Icon" width={48} height={48} className="rounded-full" /> */}
+                <div className="flex items-center justify-center gap-3">
+                    
                 </div>
             )}
             
-            <div className="flex justify-center items-center gap-3">
+            <div className="flex items-center justify-center gap-3">
                 <div>
                 <h1 className="text-2xl font-bold">{h1}</h1>
                 <p className="text-sm text-gray-600">{p}</p>

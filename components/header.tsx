@@ -9,7 +9,7 @@ import { supabase } from '@/lib/supabase'
 export default function HeaderBar() {
   const [open, setOpen] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
-  const [user, setUser] = useState<import('@supabase/supabase-js').User | null>(null)
+  const [, setUser] = useState<import('@supabase/supabase-js').User | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
 
   const router = useRouter()
@@ -121,12 +121,6 @@ export default function HeaderBar() {
               </>
             ) : (
               <>
-                {/* <Link href="/" onClick={() => setOpen(false)}>Beranda</Link>
-                <Link href="/berita" onClick={() => setOpen(false)}>Berita</Link>
-                <Link href="/galeri" onClick={() => setOpen(false)}>Galeri</Link>
-                <Link href="/struktur" onClick={() => setOpen(false)}>Struktur</Link>
-                <Link href="/pengaduan" onClick={() => setOpen(false)}>Pengaduan</Link>
-                <Link href="/polling" onClick={() => setOpen(false)}>Polling</Link> */}
                 <Link href="/" onClick={() => setOpen(false)}>Beranda</Link>
                 <Link href="/berita" onClick={() => setOpen(false)}>Berita</Link>
                 <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Galeri</span>

@@ -2,7 +2,7 @@
 
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -25,7 +25,7 @@ const slides = [
 ]
 
 export default function HomePage() {
-  const [index, setIndex] = useState(0)
+  const [index] = useState(0)
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
