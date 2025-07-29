@@ -48,3 +48,8 @@ a {
 .ProseMirror:focus {
   outline: none;
 }
+
+.org-chart-node::before,
+.org-chart-node::after {
+  border-color: #999 !important;
+}
