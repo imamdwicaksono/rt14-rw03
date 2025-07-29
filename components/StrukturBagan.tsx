@@ -54,12 +54,12 @@ export default function StrukturBaganPage() {
   const renderNode = (person: Struktur) => {
     const jabatanColor = getJabatanColor(person.jabatan?.nama_jabatan)
     return (
-      <div className={`flex flex-col items-center p-2 text-center border rounded shadow w-44 ${jabatanColor}`}>
+      <div className={`flex flex-col items-center p-2 text-center border rounded shadow w-44 ${jabatanColor}`} style={{ margin: 'auto' }}>
         <Image
           src={person.foto || '/default-profile.png'}
           alt={person.nama}
-          width={64}
-          height={64}
+          width={100}
+          height={80}
           className="object-cover border border-white rounded-full"
         />
         <strong className="mt-2 text-sm">{person.nama}</strong>
@@ -109,7 +109,7 @@ export default function StrukturBaganPage() {
 
       <div
         ref={treeRef}
-        className="flex justify-center w-full overflow-visible min-w-[1000px] min-h-screen"
+        className="flex justify-center w-full min-h-screen overflow-visible"
       >
         {pimpinan && (
           <Tree
