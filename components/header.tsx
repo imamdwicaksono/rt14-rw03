@@ -81,7 +81,7 @@ export default function HeaderBar() {
             <Link href="/berita">Berita</Link>
             <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Galeri</span>
             <Link href="/struktur">Struktur</Link>
-            <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Pengaduan</span>
+            <Link href="/pengaduan">Pengaduan</Link>
             <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Polling</span>
           </div>
         )}
@@ -125,7 +125,7 @@ export default function HeaderBar() {
                 <Link href="/berita" onClick={() => setOpen(false)}>Berita</Link>
                 <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Galeri</span>
                 <Link href="/struktur" onClick={() => setOpen(false)}>Struktur</Link>
-                <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Pengaduan</span>
+                <Link href="/pengaduan" onClick={() => setOpen(false)}>Pengaduan</Link>
                 <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Polling</span>
               </>
             )}
