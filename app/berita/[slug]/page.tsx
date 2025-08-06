@@ -7,6 +7,8 @@ import { supabase } from '@/lib/supabase'
 import HeaderContent from '@/components/header_content'
 import ShareButtons from '@/components/ShareButtons'
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
+
 
 type Berita = {
   id: number
@@ -20,6 +22,8 @@ type Berita = {
 export default function BeritaDetailPage() {
   const { slug } = useParams()
   const [berita, setBerita] = useState<Berita | null>(null)
+  const [formattedDate, setFormattedDate] = useState('')
+  const PdfViewer = dynamic(() => import('@/components/PdfViewer'), { ssr: false })
 
   useEffect(() => {
     const fetchBerita = async () => {
@@ -37,6 +41,19 @@ export default function BeritaDetailPage() {
 
     if (slug) fetchBerita()
   }, [slug])
+
+  useEffect(() => {
+    if (berita?.created_at) {
+      const date = new Date(berita.created_at)
+      setFormattedDate(date.toLocaleDateString('id-ID'))
+    }
+  }, [berita])
+
+  function extractPdfUrl(text: string): string | null {
+    const pdfRegex = /(https?:\/\/[^\s]+\.pdf)/gi;
+    const matches = text.match(pdfRegex);
+    return matches ? matches[0] : null;
+  }
 
   if (!berita) return <div className="text-center">Loading...</div>
 
@@ -56,7 +73,7 @@ export default function BeritaDetailPage() {
         <div className="p-4 bg-white shadow rounded-xl">
           <h1 className="mb-2 text-2xl font-bold">{berita.judul}</h1>
           <p className="mb-3 text-sm text-gray-500">
-            {new Date(berita.created_at).toLocaleDateString('id-ID')}
+            {formattedDate}
           </p>
           <ShareButtons title={berita.judul} />
           {berita.gambar_url && (
@@ -66,7 +83,22 @@ export default function BeritaDetailPage() {
               alt={berita.judul}
               className="object-cover w-full mb-4 rounded-md" />
           )}
-          <p className="text-base leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: berita.isi }} />
+
+          {/* Extract PDF URL before rendering */}
+          {(() => {
+            const pdfUrl = extractPdfUrl(berita.isi);
+            console.log('Extracted PDF URL:', pdfUrl);
+            return pdfUrl ? (
+              <div className="mt-6">
+                <PdfViewer fileUrl={pdfUrl} />
+              </div>
+            ) : (
+              <p
+                className="text-base leading-relaxed whitespace-pre-line"
+                dangerouslySetInnerHTML={{ __html: berita.isi }}
+              />
+            );
+          })()}
         </div>
       </div>
     </>

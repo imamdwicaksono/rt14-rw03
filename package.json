@@ -9,6 +9,8 @@
     "tw:watch": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
   },
   "dependencies": {
+    "@react-pdf-viewer/core": "^3.12.0",
+    "@react-pdf-viewer/default-layout": "^3.12.0",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/auth-helpers-react": "^0.5.0",
     "@supabase/supabase-js": "^2.52.0",
@@ -19,10 +21,12 @@
     "@vercel/analytics": "^1.5.0",
     "html-to-image": "^1.11.13",
     "next": "15.4.2",
+    "pdfjs-dist": "5.4.54",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-organizational-chart": "^2.2.1",
+    "react-pdf": "^10.0.1",
     "sanitize-html": "^2.17.0",
     "uuid": "^11.1.0"
   },

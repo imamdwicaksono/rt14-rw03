@@ -13,4 +13,10 @@ if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
   }
 }
 
+module.exports = {
+  experimental: {
+    esmExternals: true,
+  },
+}
+
 export default nextConfig;
