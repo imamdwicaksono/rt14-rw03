@@ -32,10 +32,10 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Beringin 14 - RT 14 RW 03',
+    title: 'Beringin 14 - RT 14 RW 03 Keroncong Permai',
     description: 'Informasi kegiatan, galeri dan pengaduan warga.',
-    images: ['https://beringin14.vercel.app/og-cover.png'],
-    url: 'https://beringin14.vercel.app',
+    images: ['https://rt14.keroncongpermai.com/og-cover.png'],
+    url: 'https://rt14.keroncongpermai.com',
   },
   twitter: {
     card: 'summary_large_image',
