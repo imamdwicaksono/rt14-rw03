@@ -13,7 +13,7 @@ export default function HeaderBar() {
   const [, setUser] = useState<import('@supabase/supabase-js').User | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
 
-  const pageKeuangan = env.NEXT_PUBLIC_PAGE_KEUANGAN || 'https://kuangan-rt14.keroncongpermai.com'
+  const pageKeuangan = env.NEXT_PUBLIC_PAGE_KEUANGAN || 'https://keuangan-rt14.keroncongpermai.com'
 
   const router = useRouter()
   const pathname = usePathname()
