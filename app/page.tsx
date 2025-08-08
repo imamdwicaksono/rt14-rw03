@@ -5,6 +5,8 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { env } from 'process'
+
 
 const slides = [
   {
@@ -26,6 +28,9 @@ const slides = [
 
 export default function HomePage() {
   const [index] = useState(0)
+
+  const pageKeuangan = env.NEXT_PUBLIC_PAGE_KEUANGAN || 'https://kuangan-rt14.keroncongpermai.com'
+  
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -67,20 +72,25 @@ export default function HomePage() {
           <p className="text-sm text-gray-600">(Coming Soon) Dokumentasi foto kegiatan RT.</p>
         </div>
 
-        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
+        <Link href="/struktur" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">👥 Struktur Organisasi</h3>
-          <p className="text-sm text-gray-600">(Coming Soon) Pengurus RT hingga Kelurahan.</p>
-        </div>
+          <p className="text-sm text-gray-600">Pengurus RT hingga Kelurahan.</p>
+        </Link>
 
-        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
+        <Link href="/pengaduan" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">📮 Pengaduan Warga</h3>
-          <p className="text-sm text-gray-600">(Coming Soon) Sampaikan keluhan atau laporan Anda.</p>
-        </div>
+          <p className="text-sm text-gray-600">Sampaikan keluhan atau laporan Anda.</p>
+        </Link>
 
         <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
           <h3 className="text-lg font-bold">📊 Polling Musyawarah</h3>
           <p className="text-sm text-gray-600">(Coming Soon) Ikut serta dalam pengambilan keputusan.</p>
         </div>
+
+        <Link href={pageKeuangan} className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
+          <h3 className="text-lg font-bold">💰 Keuangan RT</h3>
+          <p className="text-sm text-gray-600">Lihat laporan keuangan RT 14.</p>
+        </Link>
       </div>
     </div>
   )

@@ -5,12 +5,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { env } from 'process'
 
 export default function HeaderBar() {
   const [open, setOpen] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
   const [, setUser] = useState<import('@supabase/supabase-js').User | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
+
+  const pageKeuangan = env.NEXT_PUBLIC_PAGE_KEUANGAN || 'https://kuangan-rt14.keroncongpermai.com'
 
   const router = useRouter()
   const pathname = usePathname()
@@ -66,6 +69,7 @@ export default function HeaderBar() {
             <Link href="/admin/struktur">Struktur Organisasi</Link>
             <Link href="/admin/pengaduan">Pengaduan Warga</Link>
             <Link href="/admin/polling">Polling Musyawarah</Link>
+            <Link href={pageKeuangan}>Keuangan</Link>
             {isLogin && (
               <button
                 onClick={handlerLogout}
@@ -83,6 +87,7 @@ export default function HeaderBar() {
             <Link href="/struktur">Struktur</Link>
             <Link href="/pengaduan">Pengaduan</Link>
             <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Polling</span>
+            <Link href={pageKeuangan}>Keuangan</Link>
           </div>
         )}
 
@@ -110,6 +115,7 @@ export default function HeaderBar() {
                 <Link href="/admin/struktur" onClick={() => setOpen(false)}>Struktur Organisasi</Link>
                 <Link href="/admin/pengaduan" onClick={() => setOpen(false)}>Pengaduan Warga</Link>
                 <Link href="/admin/polling" onClick={() => setOpen(false)}>Polling Musyawarah</Link>
+                <Link href={pageKeuangan} onClick={() => setOpen(false)}>Keuangan</Link>
                 {isLogin && (
                   <button
                     onClick={handlerLogout}
@@ -127,6 +133,7 @@ export default function HeaderBar() {
                 <Link href="/struktur" onClick={() => setOpen(false)}>Struktur</Link>
                 <Link href="/pengaduan" onClick={() => setOpen(false)}>Pengaduan</Link>
                 <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Polling</span>
+                <Link href={pageKeuangan} onClick={() => setOpen(false)}>Keuangan</Link>
               </>
             )}
           </div>
