@@ -69,7 +69,7 @@ export default function HeaderBar() {
             <Link href="/admin/struktur">Struktur Organisasi</Link>
             <Link href="/admin/pengaduan">Pengaduan Warga</Link>
             <Link href="/admin/polling">Polling Musyawarah</Link>
-            <Link href={pageKeuangan}>Keuangan</Link>
+            <Link  href={pageKeuangan} target="_blank" >Keuangan</Link>
             {isLogin && (
               <button
                 onClick={handlerLogout}
@@ -87,7 +87,7 @@ export default function HeaderBar() {
             <Link href="/struktur">Struktur</Link>
             <Link href="/pengaduan">Pengaduan</Link>
             <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Polling</span>
-            <Link href={pageKeuangan}>Keuangan</Link>
+            <Link href={pageKeuangan} target="_blank" >Keuangan</Link>
           </div>
         )}
 
@@ -115,7 +115,7 @@ export default function HeaderBar() {
                 <Link href="/admin/struktur" onClick={() => setOpen(false)}>Struktur Organisasi</Link>
                 <Link href="/admin/pengaduan" onClick={() => setOpen(false)}>Pengaduan Warga</Link>
                 <Link href="/admin/polling" onClick={() => setOpen(false)}>Polling Musyawarah</Link>
-                <Link href={pageKeuangan} onClick={() => setOpen(false)}>Keuangan</Link>
+                <Link href={pageKeuangan} target="_blank"  onClick={() => setOpen(false)}>Keuangan</Link>
                 {isLogin && (
                   <button
                     onClick={handlerLogout}
@@ -133,7 +133,7 @@ export default function HeaderBar() {
                 <Link href="/struktur" onClick={() => setOpen(false)}>Struktur</Link>
                 <Link href="/pengaduan" onClick={() => setOpen(false)}>Pengaduan</Link>
                 <span className="text-gray-400 cursor-not-allowed">(Coming Soon) Polling</span>
-                <Link href={pageKeuangan} onClick={() => setOpen(false)}>Keuangan</Link>
+                <Link href={pageKeuangan} target="_blank"  onClick={() => setOpen(false)}>Keuangan</Link>
               </>
             )}
           </div>

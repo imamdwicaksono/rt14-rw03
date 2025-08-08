@@ -87,7 +87,7 @@ export default function HomePage() {
           <p className="text-sm text-gray-600">(Coming Soon) Ikut serta dalam pengambilan keputusan.</p>
         </div>
 
-        <Link href={pageKeuangan} className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
+        <Link href={pageKeuangan} target="_blank" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">💰 Keuangan RT</h3>
           <p className="text-sm text-gray-600">Lihat laporan keuangan RT 14.</p>
         </Link>
