@@ -67,7 +67,7 @@ export default function PengaduanForm() {
   }, []);
 
   return (
-    <div className="max-w-xl p-6 mx-auto">
+    <div className="max-w-full mx-auto">
       <HeaderContent
           h1="📮 Formulir Pengaduan"
           p="Silakan isi formulir berikut untuk mengajukan pengaduan."
