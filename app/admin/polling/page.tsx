@@ -41,13 +41,13 @@ export default function IndexAdmin() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-full mx-auto">
       <HeaderContent
         h1="Daftar Polling"
         p="Kelola polling yang telah dibuat."
       />
       <div className="hidden space-y-4 md:block">
-        <Link href="/admin/polls/add">+ Tambah Polling</Link>
+        <Link href="/admin/polling/add">+ Tambah Polling</Link>
         <div className="overflow-x-auto rounded-lg shadow">
           <table className="min-w-full bg-white divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -69,7 +69,7 @@ export default function IndexAdmin() {
             <td className="px-4 py-2">{new Date(p.created_at).toLocaleDateString()}</td>
             <td className="px-4 py-2">{p.expired_at ? new Date(p.expired_at).toLocaleDateString() : '-'}</td>
             <td className="px-4 py-2">
-              <span className={`px-2 py-1 rounded text-xs font-semibold ${p.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+              <span className={`px-2 py-1 rounded text-xs font-semibold ${p.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                 {p.is_active ? 'Ya' : 'Tidak'}
               </span>
             </td>
@@ -77,7 +77,8 @@ export default function IndexAdmin() {
               <Link href={`/polling/${p.link_code}`} className="text-blue-600 underline break-all">{`/polling/${p.link_code}`}</Link>
             </td>
             <td className="px-4 py-2 space-x-2">
-              <Link href={`/admin/polls/${p.id}`} className="px-2 py-1 text-xs text-blue-700 transition bg-blue-100 rounded hover:bg-blue-200">Edit</Link>
+              <Link href={`/admin/polling/${p.id}`} className="px-2 py-1 text-xs text-blue-700 transition bg-blue-100 rounded hover:bg-blue-200">Detail</Link>
+              <Link href={`/admin/polling/edit/${p.id}`} className="px-2 py-1 text-xs text-blue-700 transition bg-blue-100 rounded hover:bg-blue-200">Edit</Link>
                 <button
                 type="button"
                 onClick={() => {
@@ -100,7 +101,7 @@ export default function IndexAdmin() {
                 >
                 Duplikat
                 </button>
-              {p.active ? (
+              {p.is_active ? (
                 <button type="button" onClick={() => handleInActivate(p.id)} className="px-2 py-1 text-xs text-yellow-700 transition bg-yellow-100 rounded hover:bg-yellow-200">Nonaktifkan</button>
               ) : (
                 <button type="button" onClick={() => handleActivate(p.id)} className="px-2 py-1 text-xs text-blue-700 transition bg-blue-100 rounded hover:bg-blue-200">Aktifkan</button>
@@ -154,7 +155,7 @@ export default function IndexAdmin() {
                 </button>
                 <br />
               <button type="button" onClick={() => handleDuplicate(p.id)} className="text-green-600 underline">Duplikat</button><br></br>
-              {p.active ? (
+              {p.is_active ? (
                 <button type="button" onClick={() => handleInActivate(p.id)} className="text-yellow-600 underline">Nonaktifkan</button>
               ) : (
                 <button type="button" onClick={() => handleActivate(p.id)} className="text-blue-600 underline">Aktifkan</button>

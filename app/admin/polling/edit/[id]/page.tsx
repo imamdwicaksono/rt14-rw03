@@ -21,13 +21,13 @@ export default function FormTambahPolling() {
   }
 
   return (
-    <div className="max-w-full mx-auto">
+    <>
       <HeaderContent
         h1="🗳️ Polling Baru"
         p="Buat polling baru untuk warga Beringin 14."
       />
-      <div className="">
-        <form onSubmit={handleSubmit} className="max-w-full p-6 mx-auto space-y-4 bg-white rounded shadow">
+      <div className="max-w-4xl mx-auto">
+        <form onSubmit={handleSubmit} className="max-w-md p-6 mx-auto space-y-4 bg-white rounded shadow">
           <input
             value={title}
             onChange={e => setTitle(e.target.value)}
@@ -81,6 +81,6 @@ export default function FormTambahPolling() {
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

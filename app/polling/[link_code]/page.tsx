@@ -43,7 +43,7 @@ export default function FormVote() {
     alert('Terima kasih sudah voting!');
   }
 
-  if (!poll) {
+  if (poll == null) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
         <div className="w-full max-w-md p-6 text-center bg-white shadow-lg rounded-xl">
