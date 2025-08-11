@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="id">
       <body className="bg-[#D3D3D3] text-gray-900 ">
         <HeaderBar />
-        <main className="min-h-screen w-[90%] mx-auto pt-[30px] pb-[30px]">{children}</main>
+        <main className="min-h-screen w-[90%] mx-auto pt-[100px] pb-[30px]">{children}</main>
         <footer className="py-4 text-xs text-center text-gray-500 bg-white">
           © {new Date().getFullYear()} RT 14 RW 03 Keroncong Permai
         </footer>

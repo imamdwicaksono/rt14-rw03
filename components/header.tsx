@@ -47,10 +47,19 @@ export default function HeaderBar() {
   }, [])
 
   return (
-    <nav className={`
-      z-50 transition-all duration-300 ease-in-out bg-white
-      ${isScrolled ? 'fixed top-0 left-0 w-full shadow-md backdrop-blur-sm' : 'relative'}
-    `}>
+    <nav
+      className={`
+      z-50 bg-white fixed top-0 left-0 w-full
+      ${isScrolled ? 'shadow-md backdrop-blur-sm' : ''}
+      transition-all duration-500 ease-in-out
+      `}
+      style={{
+      boxShadow: isScrolled ? '0 2px 16px rgba(0,0,0,0.08)' : 'none',
+      transition: 'box-shadow 0.5s, backdrop-filter 0.5s, background 0.5s',
+      background: isScrolled ? 'rgba(255,255,255,0.95)' : 'white',
+      backdropFilter: isScrolled ? 'blur(6px)' : 'none',
+      }}
+    >
       <div className="w-[90%] mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Image src="/icon/beringin14_icon.png" alt="Icon" width={48} height={48} className="rounded-full" />
