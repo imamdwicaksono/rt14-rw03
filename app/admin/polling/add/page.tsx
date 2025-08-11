@@ -17,7 +17,7 @@ export default function FormTambahPolling() {
     e.preventDefault();
     const link_code = Math.random().toString(36).substring(2, 8).toUpperCase();
     await supabase.from('polls').insert({ title, description, options, type, link_code });
-    router.push('/admin/polls');
+    router.push('/admin/polling');
   }
 
   return (

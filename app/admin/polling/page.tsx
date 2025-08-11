@@ -114,7 +114,7 @@ export default function IndexAdmin() {
       </div>
 
       {/* Mobile version */}
-      <Link href="/admin/polls/add" className="inline-block w-full px-4 py-2 text-center text-white bg-blue-500 rounde md:hidden">+ Tambah Polling</Link>
+      <Link href="/admin/polling/add" className="inline-block w-full px-4 py-2 text-center text-white bg-blue-500 rounde md:hidden">+ Tambah Polling</Link>
       <div className="mt-6 bg-white md:hidden">
         {polls.map((p: any) => (
           <div key={p.id} className="flex flex-col gap-2 p-4 mb-4 border rounded">
@@ -140,7 +140,7 @@ export default function IndexAdmin() {
               <Link href={`/polling/${p.link_code}`} className="text-blue-600 underline">{`/polling/${p.link_code}`}</Link>
             </div>
             <div className="flex flex-wrap gap-2 mt-2">
-              <Link href={`/admin/polls/${p.id}`} className="text-blue-600 underline">Edit</Link>
+              <Link href={`/admin/polling/${p.id}`} className="text-blue-600 underline">Edit</Link>
                 <button
                 type="button"
                 onClick={() => {

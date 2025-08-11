@@ -92,7 +92,7 @@ export default function IndexAdmin() {
           <Link href={`/polling/${p.link_code}`} className="text-blue-600 underline">{`/polling/${p.link_code}`}</Link>
         </div>
         <div>
-          <Link href={`/admin/polls/${p.id}`} className="text-blue-600 underline">Edit</Link>
+          <Link href={`/admin/polling/${p.id}`} className="text-blue-600 underline">Edit</Link>
         </div>
           </div>
         ))}
