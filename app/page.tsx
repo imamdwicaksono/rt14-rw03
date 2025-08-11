@@ -82,10 +82,10 @@ export default function HomePage() {
           <p className="text-sm text-gray-600">Sampaikan keluhan atau laporan Anda.</p>
         </Link>
 
-        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
+         <Link href="/polling" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">📊 Polling Musyawarah</h3>
-          <p className="text-sm text-gray-600">(Coming Soon) Ikut serta dalam pengambilan keputusan.</p>
-        </div>
+          <p className="text-sm text-gray-600">Ikut serta dalam pengambilan keputusan.</p>
+        </Link>
 
         <Link href={pageKeuangan} target="_blank" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">💰 Keuangan RT</h3>
