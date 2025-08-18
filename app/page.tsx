@@ -67,10 +67,10 @@ export default function HomePage() {
           <p className="text-sm text-gray-600">Informasi terbaru seputar kegiatan warga.</p>
         </Link>
 
-        <div className="p-4 bg-gray-100 shadow cursor-not-allowed rounded-xl opacity-60">
+        <Link href="/galeri" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">🖼️ Galeri Foto</h3>
-          <p className="text-sm text-gray-600">(Coming Soon) Dokumentasi foto kegiatan RT.</p>
-        </div>
+          <p className="text-sm text-gray-600">Dokumentasi foto kegiatan RT.</p>
+        </Link>
 
         <Link href="/struktur" className="p-4 bg-white shadow rounded-xl hover:bg-gray-100">
           <h3 className="text-lg font-bold">👥 Struktur Organisasi</h3>
