@@ -8,6 +8,9 @@ import HeaderContent from '@/components/header_content'
 import ShareButtons from '@/components/ShareButtons'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
+import GalleryGrid from '@/components/galeri/GalleryGrid'
+import Galeri from '@/components/Galeri'
+import { text } from 'stream/consumers'
 
 
 type Berita = {
@@ -55,7 +58,66 @@ export default function BeritaDetailPage() {
     return matches ? matches[0] : null;
   }
 
+  function extractGaleri(text: string): string {
+    // regex untuk directive galeri.load={folder}
+    const folderRegex = /galeri\.load\s*=\s*{([^}]+)}/i;
+    console.log('Extracting Galeri Folder from:', text);
+    const folderMatch = text.match(folderRegex);
+    if (folderMatch) {
+      const folderName = folderMatch[1].trim();
+      console.log('Extracted Galeri Folder:', folderName);
+
+
+      return folderName;
+    }
+
+    return "";
+  }
+
   if (!berita) return <div className="text-center">Loading...</div>
+
+
+  const loadGaleri = () => {
+    const galeriFolder = extractGaleri(berita.isi);
+    console.log('Extracted Galeri Folder:', galeriFolder);
+    return galeriFolder ? (
+      <div className="mt-6">
+        <Galeri search={galeriFolder} />
+      </div>
+    ) : null;
+  };
+
+  const loadPdf = () => {
+    const pdfUrl = extractPdfUrl(berita.isi);
+    console.log('Extracted PDF URL:', pdfUrl);
+    return pdfUrl ? (
+      <div className="mt-6">
+        <PdfViewer fileUrl={pdfUrl} />
+      </div>
+    ) : null;
+  }
+
+  const loadDefault = () => {
+    return (
+      <div className="mt-6">
+        <p
+          className="text-base leading-relaxed whitespace-pre-line"
+          dangerouslySetInnerHTML={{ __html: berita.isi }}
+        />
+      </div>
+    );
+  };
+
+  const loadContent = () => {
+    if (loadPdf()) {
+      return loadPdf();
+    }
+    if (loadGaleri()) {
+      return loadGaleri();
+    }
+
+    loadDefault();
+  };
 
   return (
     <>
@@ -66,7 +128,7 @@ export default function BeritaDetailPage() {
       <meta property="og:image" content={berita.gambar_url} />
       <meta property="og:url" content={`https://rt14.keroncongpermai.com/berita/${berita.slug}`} />
     </Head>
-    <div className="max-w-3xl mx-auto">
+    <div className="mx-auto max-full">
         <HeaderContent
           h1="📢 Detail Berita & Kegiatan Warga"
           p="Detail Berita-berita dan kegiatan terbaru warga Beringin 14." />
@@ -85,20 +147,7 @@ export default function BeritaDetailPage() {
           )}
 
           {/* Extract PDF URL before rendering */}
-          {(() => {
-            const pdfUrl = extractPdfUrl(berita.isi);
-            console.log('Extracted PDF URL:', pdfUrl);
-            return pdfUrl ? (
-              <div className="mt-6">
-                <PdfViewer fileUrl={pdfUrl} />
-              </div>
-            ) : (
-              <p
-                className="text-base leading-relaxed whitespace-pre-line"
-                dangerouslySetInnerHTML={{ __html: berita.isi }}
-              />
-            );
-          })()}
+          {loadContent()}
         </div>
       </div>
     </>

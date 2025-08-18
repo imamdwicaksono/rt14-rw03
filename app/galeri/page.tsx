@@ -1,68 +1,96 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
-import HeaderContent from '@/components/header_content'
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import Galeri from "@/components/Galeri";
 
-type Galeri = {
-  id: number
-  judul: string
-  deskripsi: string
-  gambar_url: string
-  created_at: string
-  slug: string
+interface GaleriItem {
+  id: number;
+  url: string;
+  index: string;
+  keterangan: string;
+  created_at: string;
 }
 
 export default function GaleriPage() {
-  const [galeriList, setGaleriList] = useState<Galeri[]>([])
+  const [galeri, setGaleri] = useState<GaleriItem[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchGaleri = async () => {
+    const loadGaleri = async () => {
       const { data, error } = await supabase
-        .from('galeri')
-        .select('*')
-        .order('created_at', { ascending: false })
+        .from("galeri")
+        .select("*")
+        .order("created_at", { ascending: true });
 
-      if (!error && data) {
-        setGaleriList(data)
+      if (error) {
+        console.error(error);
+        return;
       }
-    }
 
-    fetchGaleri()
-  }, [])
+      setGaleri(data as GaleriItem[]);
+    };
+
+    loadGaleri();
+  }, []);
+
+  // daftar index unik
+  const indexList = Array.from(new Set(galeri.map(f => f.index)));
+
+  // file sesuai index terpilih
+  const selectedFiles = selectedIndex
+    ? galeri.filter(f => f.index === selectedIndex)
+    : [];
+
+  // fungsi ambil thumbnail random per index
+  const getRandomThumbnail = (k: string) => {
+    const files = galeri.filter(f => f.index === k && f.url);
+    if (files.length === 0) return "/placeholder.jpg"; // fallback
+    const randomIndex = Math.floor(Math.random() * files.length);
+    return files[randomIndex].url;
+  };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <HeaderContent
-        h1="📢 Berita & Kegiatan Warga"
-        p="Berita-berita dan kegiatan terbaru warga Beringin 14."
-      />
-      <div className="space-y-6">
-        {galeriList.map((item) => (
-          <div key={item.id} className="p-4 bg-white shadow rounded-xl" onClick={() => window.location.href = `/galeri/${item.slug}`}>
-            <h2 className="text-xl font-semibold">{item.judul}</h2>
-            <p className="mb-2 text-sm text-gray-500">
-              {new Date(item.created_at).toLocaleDateString('id-ID')}
-            </p>
-            {item.gambar_url && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={item.gambar_url}
-                alt={item.judul}
-                className="object-cover mb-3 rounded-md max-h-64"
-              />
-            )}
-            <div className="mt-3 text-right">
-              <a
-                href={`/galeri/${item.slug}`}
-                className="text-sm text-blue-600 hover:underline"
+    <div className="p-4">
+      {!selectedIndex ? (
+        <div>
+          <h2 className="mb-4 text-2xl font-bold">Galeri</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {indexList.map(k => (
+              <div
+                key={k}
+                className="transition bg-white rounded-lg shadow cursor-pointer hover:shadow-lg"
+                onClick={() => setSelectedIndex(k)}
               >
-                Lihat selengkapnya →
-              </a>
-            </div>
+                <div className="w-full h-48 overflow-hidden rounded-t-lg">
+                  <img
+                    src={getRandomThumbnail(k)}
+                    alt={k}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold">{galeri.find(f => f.index === k)?.keterangan}</h3>
+                  <p className="text-sm text-gray-500">
+                    {galeri.filter(f => f.index === k).length} file
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div>
+          <button
+            className="mb-4 text-sm text-gray-600 underline"
+            onClick={() => setSelectedIndex(null)}
+          >
+            ← Kembali
+          </button>
+          <h2 className="mb-2 text-xl font-semibold">{galeri.find(f => f.index === selectedIndex)?.keterangan}</h2>
+          <Galeri search={selectedIndex} />
+        </div>
+      )}
     </div>
-  )
+  );
 }
