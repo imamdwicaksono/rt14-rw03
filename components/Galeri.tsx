@@ -114,6 +114,8 @@ export default function Galeri({ search }: GaleriProps) {
                 {file.url.match(/\.(mp4|mov|webm)$/i) ? (
                   <video
                     src={file.url}
+                    controls
+                    preload="metadata"
                     className="rounded-lg shadow"
                   />
                 ) : (
@@ -149,7 +151,7 @@ export default function Galeri({ search }: GaleriProps) {
               <video
                 src={selected.url}
                 controls
-                autoPlay
+                preload="metadata"
                 className="max-h-[80vh] max-w-full rounded-lg"
               />
             ) : (
